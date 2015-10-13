@@ -4,12 +4,14 @@ public class Main {
 	public static void main(String[] args) {
 		Random r = new Random();	// Random number generator object
 		int numbers = 6;	// The number of possible result numbers
-		int total = 100000;	// The number of tests
+		int total = 1 * (int)Math.pow(10, 7);	// The number of tests
 		int [] randoms = new int[numbers];	// Array of results
+		double [] differences = new double[numbers];	// The percent differences for each number
 		int curRand;	// The currently selected random number
 		double percent;	// The percent occurance of the current number
 		double expectedPercent;	// The expected occurance percentage for each number
-		double percentDifference;	// THe difference between the expected and actual percents
+		double percentDifference;	// The difference between the expected and actual percents
+		double totalDifference = 0.0;
 
 		// Calculate the expected percent for each number
 		expectedPercent = (100.0 / (double)numbers);
@@ -27,6 +29,7 @@ public class Main {
 		for(int i = 0; i < numbers; i++) {
 			percent = (randoms[i] / (double)total) * 100.0;
 			percentDifference = percent - expectedPercent;
+			differences[i] = percentDifference;
 
 			System.out.print(i + ": " + randoms[i]);
 			System.out.print("\t" + percent + " %");
@@ -37,5 +40,11 @@ public class Main {
 			System.out.print(percentDifference);
 			System.out.println();
 		}
+
+		// Calculate the average difference
+		for(int i = 0; i < numbers; i++) {
+			totalDifference += Math.abs(differences[i]); 
+		}
+		System.out.println("Average Difference: " + (totalDifference / (double)numbers));
 	}
 }
